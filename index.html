@@ -1,0 +1,102 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SE Australia National Parks Analysis</title>
+
+  <!-- Pure.css Base + Responsive Grids -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css">
+
+  <!-- Custom External Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Vega, Vega-Lite & Vega-Embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+
+
+<body>
+
+  <div class="page-container">
+
+    <!-- Header Section -->
+    <header class="pure-g section-row">
+      <div class="pure-u-1 col-content">
+        <h1>SE Australia National Parks Analysis</h1>
+        <p class="subtitle">Spatial distribution, trail density, and amenity metrics across NSW, VIC, and TAS.</p>
+      </div>
+    </header>
+
+    <!-- Section 1: Regional Context & Area -->
+    <section class="pure-g section-row">
+
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis1_hexmap" class="chart-container"></div>
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <h2>01. Regional Coverage</h2>
+        <p>Overview of National Park spatial distribution across Southeast Australia using hex-binning alongside top park area rankings.</p>
+      </div>
+      
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis2_top_area" class="chart-container"></div>
+      </div>
+    </section>
+
+    <!-- Section 2: Trail Networks & Density -->
+    <section class="pure-g section-row">
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <h2>02. Hiking Infrastructure</h2>
+        <p>Comparing total track length against park area, highlighting high-density day-use reserves versus remote wilderness parks.</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis3_trail_scatter" class="chart-container"></div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis4_density_bar" class="chart-container"></div>
+      </div>
+    </section>
+
+    <!-- Section 3: Camping & Facilities -->
+    <section class="pure-g section-row">
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <h2>03. Campsites & Amenities</h2>
+        <p>Distribution of campsites across national park territory paired with visitor facility scores (toilets, water, BBQs).</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis5_campsite_map" class="chart-container"></div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis6_amenity_ranking" class="chart-container"></div>
+      </div>
+    </section>
+
+    <!-- Section 4: Topography & Summits -->
+    <section class="pure-g section-row">
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <h2>04. Peak Elevations</h2>
+        <p>Highest summits per park derived from spatial peak sampling across Victorian Alps, Snowy Mountains, and Tasmanian ranges.</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis7_peak_bars" class="chart-container"></div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-3 col-content">
+        <div id="vis8_elevation_map" class="chart-container"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Example embedding call once your JSON files are ready:
+    // vegaEmbed('#vis1_hexmap', 'specs/hexmap.json', {actions: false});
+    // vegaEmbed('#vis2_top_area', 'specs/top_area.json', {actions: false});
+  </script>
+
+</body>
+</html>
