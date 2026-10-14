@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top Mountainous Parks by Peak Elevation",
+    "subtitle": "Highest peak elevation (meters above sea level)",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "offset": 15
+  },
+  "width": 450,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+  },
+  "transform": [
+    {
+      "filter": "isValid(datum.elevation_m_max) && datum.elevation_m_max > 0"
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "elevation_m_max", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 12"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "#78909c"},
+      "encoding": {
+        "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "elevation_m_max", "type": "quantitative", "title": "Peak Elevation (m)"}
+      }
+    },
+    {
+      "mark": {"type": "circle", "size": 100, "color": "#37474f"},
+      "encoding": {
+        "y": {"field": "name", "type": "nominal", "sort": "-x"},
+        "x": {"field": "elevation_m_max", "type": "quantitative"},
+        "color": {"field": "state", "type": "nominal", "title": "State"},
+        "tooltip": [
+          {"field": "name", "type": "nominal", "title": "Park"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "elevation_m_max", "type": "quantitative", "title": "Highest Peak (m)", "format": ","},
+          {"field": "peaks_counts", "type": "quantitative", "title": "Total Peaks"}
+        ]
+      }
+    }
+  ]
+}

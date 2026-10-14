@@ -1,0 +1,94 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Campsite Infrastructure Across SE Australian National Parks",
+    "subtitle": "Bubble size corresponds to total campsite count per park",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "offset": 15
+  },
+  "width": 500,
+  "height": 500,
+  "projection": {
+    "type": "conicEqualArea",
+    "rotate": [-147, 0, 0],
+    "center": [0, -36],
+    "parallels": [-18, -36],
+    "scale": 1800
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "ne_50m_ocean"}
+      },
+      "mark": {"type": "geoshape", "fill": "#d4edf9"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "ne_50m_admin_1_states_provinces"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eef2f5",
+        "stroke": "#b0bec5",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "top_60_np"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#c8e6c9",
+        "stroke": "#81c784",
+        "strokeWidth": 0.5,
+        "opacity": 0.6
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "top_60_np"}
+      },
+      "transform": [
+        {
+          "calculate": "geoCentroid(null, datum)[0]",
+          "as": "centroid_lon"
+        },
+        {
+          "calculate": "geoCentroid(null, datum)[1]",
+          "as": "centroid_lat"
+        },
+        {
+          "filter": "isValid(datum.properties.campsites_counts) && datum.properties.campsites_counts > 0"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "color": "#e65100",
+        "opacity": 0.8,
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {"field": "centroid_lon", "type": "quantitative"},
+        "latitude": {"field": "centroid_lat", "type": "quantitative"},
+        "size": {
+          "field": "properties.campsites_counts",
+          "type": "quantitative",
+          "title": "Campsites",
+          "scale": {"range": [30, 450]}
+        },
+        "tooltip": [
+          {"field": "properties.name", "type": "nominal", "title": "Park"},
+          {"field": "properties.campsites_counts", "type": "quantitative", "title": "Campsites"}
+        ]
+      }
+    }
+  ]
+}

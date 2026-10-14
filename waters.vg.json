@@ -1,0 +1,72 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "River Length Across SE National Parks",
+    "subtitle": "Kilometers of river network per km² of park area",
+    "fontSize": 16,
+    "anchor": "start",
+    "offset": 15
+  },
+  "width": 500,
+  "height": 500,
+  "projection": {
+    "type": "conicEqualArea",
+    "rotate": [-147, 0, 0],
+    "center": [0, -36],
+    "parallels": [-18, -36],
+    "scale": 1800
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "ne_50m_ocean"}
+      },
+      "mark": {"type": "geoshape", "fill": "#d4edf9"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "ne_50m_admin_1_states_provinces"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eef2f5",
+        "stroke": "#b0bec5",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "format": {"type": "topojson", "feature": "top_60_np"}
+      },
+      "transform": [
+        {
+          "filter": "isValid(datum.properties.rivers_length)"
+        },
+        {
+          "calculate": "(datum.properties.rivers_length/1000)",
+          "as": "river_density"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#01579b",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "color": {
+          "field": "river_density",
+          "type": "quantitative",
+          "title": "River Length(km)",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {"field": "properties.name", "type": "nominal", "title": "Park"},
+          {"field": "river_density", "type": "quantitative", "title": "River Length(km)", "format": ".2f"}
+        ]
+      }
+    }
+  ]
+}

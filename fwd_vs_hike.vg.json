@@ -1,0 +1,59 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Park Access Types: Hiking vs 4WD",
+    "subtitle": "Comparing walking track length against 4WD track length per park (km)",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 450,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+  },
+  "transform": [
+    {
+      "filter": "isValid(datum.walking_tracks_length) && datum.walking_tracks_length > 0 && isValid(datum['4wd_length']) && datum['4wd_length'] > 0"
+    },
+    {
+      "calculate": "datum.walking_tracks_length / 1000",
+      "as": "walking_km"
+    },
+    {
+      "calculate": "datum['4wd_length'] / 1000",
+      "as": "4wd_km"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "size": 80,
+    "opacity": 0.8,
+    "stroke": "#ffffff",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "walking_km",
+      "type": "quantitative",
+      "title": "Walking Track Length (km - Log Scale)",
+      "scale": {"type": "log"}
+    },
+    "y": {
+      "field": "4wd_km",
+      "type": "quantitative",
+      "title": "4WD Track Length (km - Log Scale)",
+      "scale": {"type": "log"}
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State"
+    },
+    "tooltip": [
+      {"field": "name", "type": "nominal", "title": "Park"},
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "walking_km", "type": "quantitative", "title": "Walking (km)", "format": ",.1f"},
+      {"field": "4wd_km", "type": "quantitative", "title": "4WD (km)", "format": ",.1f"}
+    ]
+  }
+}

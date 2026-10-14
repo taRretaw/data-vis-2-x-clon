@@ -1,0 +1,79 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Park Area Distribution by State",
+    "subtitle": "Hover over individual bubbles to inspect park sizes (km²)",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "offset": 15
+  },
+  "width": 500,
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+  },
+  "transform": [
+    {
+      "filter": "isValid(datum.park_area) && datum.park_area > 0 && isValid(datum.state)"
+    },
+    {
+      "calculate": "datum.park_area / 1000000",
+      "as": "area_km2"
+    },
+    {
+      "calculate": "(random() - 0.5) * 35",
+      "as": "jitter"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "size": 90,
+    "opacity": 0.75,
+    "stroke": "#ffffff",
+    "strokeWidth": 1.5
+  },
+  "encoding": {
+    "x": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "axis": {
+        "labelAngle": 0,
+        "titlePadding": 10
+      }
+    },
+    "xOffset": {
+      "field": "jitter",
+      "type": "quantitative"
+    },
+    "y": {
+      "field": "area_km2",
+      "type": "quantitative",
+      "title": "Park Area (km² - Log Scale)",
+      "scale": {"type": "log"},
+      "axis": {"grid": true}
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State"
+    },
+    "tooltip": [
+      {"field": "name", "type": "nominal", "title": "Park"},
+      {"field": "state", "type": "nominal", "title": "State"},
+      {
+        "field": "area_km2",
+        "type": "quantitative",
+        "title": "Area (km²)",
+        "format": ",.1f"
+      },
+      {
+        "field": "walking_tracks_length",
+        "type": "quantitative",
+        "title": "Walking Tracks (m)",
+        "format": ","
+      }
+    ]
+  }
+}
