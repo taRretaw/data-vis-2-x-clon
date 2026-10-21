@@ -8,7 +8,7 @@
     integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css">
 
-  <!-- Custom External Stylesheet -->
+
   <link rel="stylesheet" href="styles.css">
 
   <!-- Vega, Vega-Lite & Vega-Embed -->
@@ -23,7 +23,6 @@
 
   <div class="page-container">
 
-    <!-- Header Section -->
     <header class="pure-g section-row">
       <div class="pure-u-1 col-content">
         <h1>SE Australia National Parks Analysis</h1>
@@ -31,97 +30,109 @@
       </div>
     </header>
 
-<section class="pure-g section-row">
-  <div class="pure-u-1 pure-u-md-3-5 col-content">
-    <div id="vis1_hexmap" class="chart-container hero-chart"></div>
-  </div>
-
-  <section class="pure-u-1 pure-u-md-2-5 col-content align-bottom"> 
-    <div class="pure-u-1 pure-u-md-3-5 col-content">
-    <h2>01. Regional Coverage</h2>
-    <p>Overview of National Park spatial distribution across Southeast Australia using hex-binning alongside park area spread.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec porttitor, nibh sit amet consequat lacinia, ligula lorem feugiat felis.</p>
-  </div>
-    <div class="pure-u-1 pure-u-md-1-1 col-content">
-        <div id="vis2_top_area" class="chart-container"></div>
-      </div>
-  </section>
-</section>
-
-
-
+    <!-- 01. Regional Coverage -->
     <section class="pure-g section-row">
 
-      <div class="pure-u-1 pure-u-md-4-5 col-content">
+      <!-- hex map: spacer left, chart (3/5), text right (1/5) -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
+        <div id="vis1_hexmap" class="chart-container hero-chart"></div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <h2>01. Regional Coverage</h2>
+        <p>Overview of National Park spatial distribution across Southeast Australia using hex-binning. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at.</p>
+      </div>
+
+      <!-- area bars: text left, chart (3/5), spacer right -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <p>More text on park area spread. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna.</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
         <div id="vis2_top_area" class="chart-container"></div>
       </div>
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
+
     </section>
 
-    <!-- Section 2: Trail Networks & Density -->
+    <!-- 02. Hiking Infrastructure -->
     <section class="pure-g section-row">
-      <section class="pure-u-1 pure-u-md-1-3 col-content">
-        <div lass="pure-u-1 pure-u-md-2-3 col-content">
-        <h2>02. Hiking Infrastructure</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec porttitor, nibh sit amet consequat lacinia, ligula lorem feugiat felis, vitae porta nunc risus sed erat. Sed ut cursus mauris, iaculis lobortis lectus. Donec fermentum ex nisi, ultrices fermentum est sodales non.</p>
-      </div>
 
-        <div class="pure-u-1 pure-u-md-4-5 col-content">
-        <div id="vis4_density_bar" class="chart-container"></div>
-      </div>
-      </section>
-      
+      <!-- scatter: spacer left, chart (3/5), text right -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
       <div class="pure-u-1 pure-u-md-3-5 col-content">
         <div id="vis3_trail_scatter" class="chart-container"></div>
       </div>
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <h2>02. Hiking Infrastructure</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec porttitor, nibh sit amet consequat lacinia.</p>
+      </div>
+
+      <!-- density bars: text left, chart (3/5), spacer right -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec fermentum ex nisi.</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
+        <div id="vis4_density_bar" class="chart-container"></div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
+
     </section>
 
-    <!-- Section 3: Camping & Facilities -->
+    <!-- 03. Campsites & Amenities -->
     <section class="pure-g section-row">
 
-
+      <!-- amenity ranking: spacer left, chart (3/5), text right -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
       <div class="pure-u-1 pure-u-md-3-5 col-content">
         <div id="vis6_amenity_ranking" class="chart-container"></div>
       </div>
-
-
-      <div class="pure-u-1 pure-u-md-1-5 col-content">
-        <h2>03. Campsites & Amenities</h2>
-        <p>Mauris ex erat, rhoncus non metus ut, dapibus tincidunt neque. Cras varius dui ut fringilla viverra. Praesent sed ante non massa rutrum malesuada. Praesent egestas finibus est. Sed lobortis nisi lectus, vel convallis magna blandit a. Morbi venenatis commodo sem a fermentum. Ut accumsan, elit sit amet tincidunt ornare, sem tortor mollis felis, id tempus lorem ex eu est. Aliquam ornare nibh sed est aliquet ullamcorper.</p>
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <h2>03. Campsites &amp; Amenities</h2>
+        <p>Mauris ex erat, rhoncus non metus ut, dapibus tincidunt neque. Cras varius dui ut fringilla viverra. Praesent sed ante non massa rutrum malesuada.</p>
       </div>
-    </section>
 
-    <section class="pure-g section-row">
-
-      <div class="pure-u-1 pure-u-md-1-5 col-content">
-        <h2>03.1 Koskiouszko NP</h2>
-        <p>Fusce dapibus nunc sed magna interdum fermentum. Nam a lacus odio. Aenean tincidunt sapien quis mauris iaculis, a aliquet lacus faucibus. Donec eu commodo nunc. </p>
+      <!-- campsite map: text left, chart right (4/5) -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <h3>03.1 Kosciuszko NP</h3>
+        <p>Fusce dapibus nunc sed magna interdum fermentum. Nam a lacus odio. Aenean tincidunt sapien quis mauris iaculis, a aliquet lacus faucibus.</p>
       </div>
-    <div class="pure-u-1 pure-u-md-3-5 col-content">
+      <div class="pure-u-1 pure-u-md-4-5 col-content">
         <div id="vis5_campsite_map" class="chart-container"></div>
       </div>
-      
+
     </section>
 
-    <!-- Section 4: Topography & Summits -->
+    <!-- 04. Peak Elevations -->
     <section class="pure-g section-row">
-      <div class="pure-u-1 pure-u-md-1-3 col-content">
-        <h2>04. Peak Elevations</h2>
-        <p>Highest summits per park derived from spatial peak sampling across Victorian Alps, Snowy Mountains, and Tasmanian ranges. Proin eu commodo justo, eu euismod est. Praesent varius faucibus lacus, eget tincidunt libero mollis vitae. Ut velit magna, pretium ac tortor vel, tempus finibus nisi. Sed pharetra, mauris quis feugiat dictum, nisl nisl ultricies quam, vel egestas sapien elit sit amet lacus. Mauris sed volutpat velit. </p>
-      </div>
-      <div class="pure-u-1 pure-u-md-2-3 col-content">
+
+      <!-- peak bars: spacer left, chart (3/5), text right -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
         <div id="vis7_peak_bars" class="chart-container"></div>
       </div>
-      <section class="pure-g section-row">
-        <div class="pure-u-1 pure-u-md-3-3 col-content">
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <h2>04. Peak Elevations</h2>
+        <p>Highest summits per park derived from spatial peak sampling across Victorian Alps, Snowy Mountains, and Tasmanian ranges. Proin eu commodo justo, eu euismod est.</p>
+      </div>
+
+      <!-- elevation map: text left, chart right (4/5) -->
+      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
+        <p>Placeholder text for the elevation map. Sed pharetra, mauris quis feugiat dictum, nisl nisl ultricies quam, vel egestas sapien elit sit amet lacus.</p>
+      </div>
+      <div class="pure-u-1 pure-u-md-4-5 col-content">
         <div id="vis8_elevation_map" class="chart-container"></div>
       </div>
+
     </section>
 
   </div>
+
 
   <script>
   const embedOptions = {
     actions: false,
-    mode: "vega-lite"
+    mode: "vega-lite",
+    config: { background: 'transparent' } 
   };
 
 

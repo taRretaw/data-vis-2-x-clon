@@ -93,7 +93,7 @@
     },
     {
       "fold": ["Campsites", "Toilets", "Lookouts", "Waterfalls"],
-      "as": ["Metric", "NormalizedScore"]
+      "as": ["Metric", "NormalisedScored"]
     }
   ],
   "layer": [
@@ -112,7 +112,7 @@
           "axis": {"labelAngle": 0}
         },
         "y": {
-          "field": "NormalizedScore",
+          "field": "NormalisedScored",
           "type": "quantitative",
           "title": "Normalized Relative Score (%)",
           "scale": {"domain": [0, 100], "clamp": true}
@@ -146,7 +146,7 @@
           {"field": "state", "type": "nominal", "title": "State"},
           {"field": "Metric", "type": "nominal", "title": "Category"},
           {
-            "field": "NormalizedScore",
+            "field": "NormalisedScored",
             "type": "quantitative",
             "title": "Relative Score (%)",
             "format": ".1f"
@@ -164,7 +164,7 @@
       "encoding": {
         "x": {"field": "Metric", "type": "nominal"},
         "y": {
-          "field": "NormalizedScore",
+          "field": "NormalisedScored",
           "type": "quantitative",
           "scale": {"domain": [0, 100], "clamp": true}
         },

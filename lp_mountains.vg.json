@@ -8,10 +8,16 @@
     "anchor": "start",
     "offset": 15
   },
-  "width": 450,
+  "width": 500,
   "height": 350,
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "elevation_m_max": "number"
+      }
+    }
   },
   "transform": [
     {
@@ -29,15 +35,21 @@
     {
       "mark": {"type": "rule", "strokeWidth": 2, "color": "#78909c"},
       "encoding": {
-        "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
-        "x": {"field": "elevation_m_max", "type": "quantitative", "title": "Peak Elevation (m)"}
+        "x": {
+          "field": "name", 
+          "type": "nominal", 
+          "sort": "-y", 
+          "title": null,
+          "axis": {"labelAngle": -45}
+        },
+        "y": {"field": "elevation_m_max", "type": "quantitative", "title": "Peak Elevation (m)"}
       }
     },
     {
       "mark": {"type": "circle", "size": 100, "color": "#37474f"},
       "encoding": {
-        "y": {"field": "name", "type": "nominal", "sort": "-x"},
-        "x": {"field": "elevation_m_max", "type": "quantitative"},
+        "x": {"field": "name", "type": "nominal", "sort": "-y"},
+        "y": {"field": "elevation_m_max", "type": "quantitative"},
         "color": {"field": "state", "type": "nominal", "title": "State"},
         "tooltip": [
           {"field": "name", "type": "nominal", "title": "Park"},

@@ -1,7 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+      "trail_density": "number"
+      }
+    }
   },
   "transform": [
     {
@@ -12,7 +18,7 @@
       "sort": [{"field": "trail_density", "order": "descending"}]
     },
     {
-      "filter": "datum.rank <= 15"
+      "filter": "datum.rank <= 10"
     }
   ],
   "mark": {"type": "bar", "cornerRadiusEnd": 4},
