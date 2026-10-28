@@ -1,13 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Campsite Infrastructure Across SE Australian National Parks",
-    "subtitle": "Bubble size corresponds to total campsite count per park",
-    "fontSize": 16,
-    "subtitleFontSize": 12,
-    "anchor": "start",
-    "offset": 15
-  },
+
   "width": 400,
   "height": 500,
   "projection": {
@@ -20,14 +13,14 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "url": "data/spatial_v2.json",
         "format": {"type": "topojson", "feature": "ne_50m_ocean"}
       },
       "mark": {"type": "geoshape", "fill": "#d4edf9"}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "url": "data/spatial_v2.json",
         "format": {"type": "topojson", "feature": "ne_50m_admin_1_states_provinces"}
       },
       "mark": {
@@ -39,8 +32,8 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
-        "format": {"type": "topojson", "feature": "top_60_np"}
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "top_60"}
       },
       "mark": {
         "type": "geoshape",
@@ -52,8 +45,8 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
-        "format": {"type": "topojson", "feature": "top_60_np"}
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "top_60"}
       },
       "transform": [
         {
@@ -82,7 +75,17 @@
           "field": "properties.campsites_counts",
           "type": "quantitative",
           "title": "Campsites",
-          "scale": {"range": [30, 450]}
+          "scale": {"range": [0, 450]},
+
+        "legend": {
+            "title": "Campsites",
+            "orient": "bottom-right",
+            "direction": "vertical",
+            "fillColor": "rgba(255,255,255,0.85)",
+            "padding": 6,
+            "titleFontSize": 11,
+            "labelFontSize": 10
+          }
         },
         "tooltip": [
           {"field": "properties.name", "type": "nominal", "title": "Park"},

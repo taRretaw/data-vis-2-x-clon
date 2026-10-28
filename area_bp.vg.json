@@ -1,96 +1,46 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Park Area Distribution by State",
-    "subtitle": "Hover over individual bubbles to inspect park sizes (km²)",
-    "fontSize": 16,
-    "subtitleFontSize": 12,
-    "anchor": "start",
-    "offset": 15
-  },
-  "width": 500,
-  "height": 380,
-  "data": {
-    "url": "data/all_parks_stats.csv"
-  },
+  "width": 600,
+  "height": 320,
+  "data": {"url": "data/all_parks_stats.csv"},
   "transform": [
-    {
-    "filter": "isValid(datum.park_area) && datum.park_area > 10000 && isValid(datum.state)"
-    },
-    {
-    "filter": {
-      "field": "state",
-      "oneOf": ["Victoria", "Tasmania", "New South Wales"]
-    }
-  },
-    {
-      "calculate": "datum.park_area / 1000000",
-      "as": "area_km2"
-    },
-    {
-      "calculate": "log(datum.area_km2)/ log(10)",
-      "as": "log_area"
-    },
-    {
-    "bin": {"maxbins": 40},
-    "field": "log_area",
-    "as": "bin_val"
-  },
-  {
-    "stack": null,
-    "groupby": ["state", "bin_val"],
-    "as": ["stack_offset", "stack_end"],
-    "offset": "center"
-  }
+    {"filter": "isValid(datum.park_area) && datum.park_area >= 1000000 && isValid(datum.state)"},
+    {"filter": {"field": "state", "oneOf": ["Victoria", "Tasmania", "New South Wales"]}},
+    {"calculate": "datum.park_area / 1000000", "as": "area_km2"},
+    {"calculate": "log(datum.area_km2) / log(10)", "as": "log_area"},
+    {"bin": {"maxbins": 40}, "field": "log_area", "as": "bin_val"},
+    {"stack": null, "groupby": ["state", "bin_val"], "as": ["stack_offset", "stack_end"], "offset": "center"}
   ],
-  "mark": {
-    "type": "circle",
-    "size": 90,
-    "opacity": 0.75,
-    "stroke": "#ffffff",
-    "strokeWidth": 1.5
-  },
+  "mark": {"type": "circle", "size": 90, "opacity": 0.8, "stroke": "#ffffff", "strokeWidth": 1.5},
   "encoding": {
     "x": {
       "field": "state",
       "type": "nominal",
-      "title": "State",
-      "axis": {
-        "labelAngle": 0,
-        "titlePadding": 10
-      }
+      "title": null,
+      "axis": {"labelAngle": 0, "labelFontSize": 13}
     },
-    "xOffset": {
-      "field": "stack_offset",
-      "type": "quantitative"
-    },
+    "xOffset": {"field": "stack_offset", "type": "quantitative"},
     "y": {
       "field": "area_km2",
       "type": "quantitative",
-      "title": "Park Area (km² - Log Scale)",
+      "title": "Park area (km²)",
       "scale": {"type": "log"},
-      "axis": {"grid": true}
+      "axis": {"grid": true, "format": ",", "values": [1, 10, 100, 1000, 5000]}
     },
     "color": {
       "field": "state",
       "type": "nominal",
-      "title": "State"
+      "legend": null,
+      "scale": {
+        "domain": ["New South Wales", "Victoria", "Tasmania"],
+        "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+      }
     },
     "tooltip": [
       {"field": "name", "type": "nominal", "title": "Park"},
       {"field": "state", "type": "nominal", "title": "State"},
-      {
-        "field": "area_km2",
-        "type": "quantitative",
-        "title": "Area (km²)",
-        "format": ",.1f"
-      },
-      {
-        "field": "walking_tracks_length",
-        "type": "quantitative",
-        "title": "Walking Tracks (m)",
-        "format": ","
-      }
+      {"field": "area_km2", "type": "quantitative", "title": "Area (km²)", "format": ",.1f"},
+      {"field": "walking_tracks_length", "type": "quantitative", "title": "Walking tracks (m)", "format": ","}
     ]
   }
 }

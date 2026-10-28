@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 700,
-  "height": 700,
+  "width": 450,
+  "height": 640,
   "background": "transparent",
   "config": {"view": {"stroke": null}},
   "projection": {"type": "mercator"},
@@ -22,7 +22,7 @@
             "range": ["#b7cf9f", "#d3dfa2", "#ebe3a6", "#e6cf94", "#d4b07a",
                       "#b88a63", "#9a7058", "#8a7f7a", "#bdb8b3", "#f1efec"]
           },
-          "legend": {"title": "Elevation (m)", "orient": "bottom-left"}
+          "legend": null
         }
       }
     },
@@ -68,6 +68,32 @@
         "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
         "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"}
       }
+    },
+    {
+    "data": {
+        "values": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [[150.403, -34.21], [150.62, -34.21]]
+            }
+            }
+        ]
+        },
+        "format": {"type": "json", "property": "features"}
+    },
+    "mark": {"type": "geoshape", "filled": false, "stroke": "#263238", "strokeWidth": 3}
+    },
+    {
+    "data": {"values": [{"lon": 150.511, "lat": -34.21}]},
+    "mark": {"type": "text", "text": "20 km", "dy": -15, "fontSize": 15, "fontWeight": 600, "color": "#263238"},
+    "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+    }
     }
   ]
 }

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,8 +9,9 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
     integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css">
-
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
   <!-- Vega, Vega-Lite & Vega-Embed -->
@@ -17,138 +20,325 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 
-
-
 <body>
 
   <div class="page-container">
 
     <header class="pure-g section-row">
       <div class="pure-u-1 col-content">
-        <h1>SE Australia National Parks Analysis</h1>
-        <p class="subtitle">Spatial distribution, trail density, and amenity metrics across NSW, VIC, and TAS.</p>
+        <h1>South-East Australian National Parks</h1>
+        <p class="subtitle">Spatial distribution, trail density, and amenity metrics across <strong class="state nsw">NSW</strong>, <strong class="state vic">VIC</strong>, and <strong class="state tas">TAS</strong>.</p>
       </div>
     </header>
 
     <!-- 01. Regional Coverage -->
-    <section class="pure-g section-row">
+    <section class="pure-g section-row band band-green">
 
-      <!-- hex map: spacer left, chart (3/5), text right (1/5) -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
-      <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis1_hexmap" class="chart-container hero-chart"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <h2>01. Regional Coverage</h2>
-        <p>Overview of National Park spatial distribution across Southeast Australia using hex-binning. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at.</p>
+      <!-- left: two text boxes + strip plot -->
+      <div class="pure-u-1 pure-u-md-3-5">
+        <div class="pure-g">
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>South-east Australia is a region of varied terrain and striking scenery. The Great Dividing Range runs down the east coast of <strong class="state nsw">New South Wales (NSW)</strong> and on into <strong class="state vic">Victoria</strong>, ending at the Grampians in the west, while <strong class="state tas">Tasmania</strong> holds some of the continent’s last untamed wilderness.</p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>Many of Australia’s most treasured national parks lie here. National parks come in all sizes. <strong class="state nsw">NSW</strong> has by far the most, and many cover less than 100 km². <strong class="state vic">Victoria</strong> has fewer, and <strong class="state tas">Tasmania</strong> fewest of all, though its parks tend to be larger and more remote.</p>
+          </div>
+          <div class="pure-u-1 col-content">
+            <div id="vis2_top_area" class="chart-container chart-left"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- area bars: text left, chart (3/5), spacer right -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <p>More text on park area spread. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna.</p>
+      <!-- right: hex map -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content">
+        <div id="vis1_hexmap" class="chart-container chart-left"></div>
       </div>
-      <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis2_top_area" class="chart-container"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
-
     </section>
 
-    <!-- 02. Hiking Infrastructure -->
-    <section class="pure-g section-row">
+    <!-- 02. Hiking and 4WD-ing Parks -->
+    <section class="pure-g section-row band band-sand">
 
-      <!-- scatter: spacer left, chart (3/5), text right -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">Exploring National Parks by Foot or Car?</h2>
+      </div>
+
+      <!-- left (2/5): one text block + trail density bars -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content">
+        <div class="col-text">
+          <p>National parks give us scenery to explore, whether on foot or by four-wheel drive. Of the five parks in this story, the <strong class="park">Blue Mountains</strong> and the <strong class="park">Grampians</strong> have the most track for their size, measured as metres of track per square kilometre. <strong class="park">Franklin-Gordon Wild Rivers</strong>, by contrast, is largely untracked.</p>
+        </div>
+        <div id="vis4_density_bar" class="chart-container chart-left"></div>
+      </div>
+
+      <!-- right (3/5): walking vs 4WD dot plot -->
       <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis3_trail_scatter" class="chart-container"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <h2>02. Hiking Infrastructure</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec porttitor, nibh sit amet consequat lacinia.</p>
-      </div>
-
-      <!-- density bars: text left, chart (3/5), spacer right -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris leo sapien, tempor sit amet mi at, viverra congue urna. Donec fermentum ex nisi.</p>
-      </div>
-      <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis4_density_bar" class="chart-container"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
-
-    </section>
-
-    <!-- 03. Campsites & Amenities -->
-    <section class="pure-g section-row">
-
-      <!-- amenity ranking: spacer left, chart (3/5), text right -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
-      <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis6_amenity_ranking" class="chart-container"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <h2>03. Campsites &amp; Amenities</h2>
-        <p>Mauris ex erat, rhoncus non metus ut, dapibus tincidunt neque. Cras varius dui ut fringilla viverra. Praesent sed ante non massa rutrum malesuada.</p>
-      </div>
-
-      <!-- campsite map: text left, chart right (4/5) -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <h3>03.1 Kosciuszko NP</h3>
-        <p>Fusce dapibus nunc sed magna interdum fermentum. Nam a lacus odio. Aenean tincidunt sapien quis mauris iaculis, a aliquet lacus faucibus.</p>
-      </div>
-      <div class="pure-u-1 pure-u-md-4-5 col-content">
-        <div id="vis5_campsite_map" class="chart-container"></div>
+        <div id="vis3_trail_scatter" class="chart-container chart-left"></div>
       </div>
 
     </section>
 
-    <!-- 04. Peak Elevations -->
-    <section class="pure-g section-row">
+    <!-- 03. The Grampians Peaks Trail -->
+    <section class="pure-g section-row band band-sand">
 
-      <!-- peak bars: spacer left, chart (3/5), text right -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content"></div>
-      <div class="pure-u-1 pure-u-md-3-5 col-content">
-        <div id="vis7_peak_bars" class="chart-container"></div>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <h2>04. Peak Elevations</h2>
-        <p>Highest summits per park derived from spatial peak sampling across Victorian Alps, Snowy Mountains, and Tasmanian ranges. Proin eu commodo justo, eu euismod est.</p>
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">The Grampians Peaks Hiking Trail</h2>
       </div>
 
-      <!-- elevation map: text left, chart right (4/5) -->
-      <div class="pure-u-1 pure-u-md-1-5 col-content col-text">
-        <p>Placeholder text for the elevation map. Sed pharetra, mauris quis feugiat dictum, nisl nisl ultricies quam, vel egestas sapien elit sit amet lacus.</p>
+      <!-- left (2/5): map + overlaid legend -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content">
+        <div class="map-overlay">
+          <div id="vis_grampians_map" class="chart-container chart-left"></div>
+          <div class="legend-overlay legend-tr">
+            <div class="lg-row"><span class="lg-line"></span> Grampians Peaks Trail</div>
+            <div class="lg-row"><span class="lg-tri"></span> Peak</div>
+          </div>
+        </div>
       </div>
-      <div class="pure-u-1 pure-u-md-4-5 col-content">
-        <div id="vis8_elevation_map" class="chart-container"></div>
+
+      <!-- right (3/5): elevation profile, three big numbers, then two text boxes -->
+      <div class="pure-u-1 pure-u-md-3-5">
+        <div class="pure-g">
+
+          <div class="pure-u-1 col-content">
+            <div id="vis_gpt_profile" class="chart-container chart-left"></div>
+          </div>
+
+          <div class="pure-u-1 pure-u-md-1-3 col-content">
+            <p class="big-stat">164 km <span>mapped length of the trail</span></p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-3 col-content">
+            <p class="big-stat">1,167 m <span>highest point, at Mt William and Durd Durd</span></p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-3 col-content">
+            <p class="big-stat">7,700 m <span>of climbing, estimated from sampled elevation</span></p>
+          </div>
+
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>The <strong class="park">Grampians Peaks Trail</strong> runs from Mount Zero in the north to Dunkeld in the south. It takes about 13 days to walk and is among the longest walking routes inside a single national park in south-east Australia.</p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>The profile shows a trail of repeated climbs and descents. The biggest climb comes around the 60 km mark, where it crosses <strong class="park">Durd Durd</strong> and <strong class="park">Mt William</strong>, the highest points at 1,167 m.</p>
+          </div>
+
+        </div>
       </div>
 
     </section>
+
+    <!-- 04. The Most Mountainous Parks -->
+    <section class="pure-g section-row band band-stone">
+
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">The Most Mountainous Parks</h2>
+      </div>
+
+      <!-- left (2/5): both paragraphs stacked in ONE column, so they keep the full measure -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content col-text">
+        <p>Height changes everything for a walker: colder weather, thinner soils and views that reward the effort. <strong class="park">Mount Kosciuszko</strong>, in the Australian Alps, is the tallest peak on the continent, and it draws visitors from all over the world. Part of the appeal is the pull of extremes, the urge to stand on the highest point.</p>
+        <p>Each lollipop is the highest peak in a park. <strong class="park">Kosciuszko</strong> and the <strong class="park">Alpine</strong> park clearly lead. The <strong class="park">Grampians</strong>, <strong class="park">Blue Mountains</strong> and <strong class="park">Wild Rivers</strong> are lower than the great ranges of Nepal, Europe or the Andes, but they offer something different: glacial lakes, rooftop plateaus and unique flora.</p>
+      </div>
+
+      <!-- right (3/5): lollipop chart -->
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
+        <div id="vis_lollipop" class="chart-container chart-left"></div>
+      </div>
+
+    </section>
+
+    <!-- 05. Alpine & Kosciuszko -->
+    <section class="pure-g section-row band band-stone">
+
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">The Peaks of Alpine and Kosciuszko National Parks</h2>
+      </div>
+
+      <div class="pure-u-1 col-content">
+        <div class="map-overlay">
+
+          <div id="vis_alpine_map" class="chart-container chart-left"></div>
+
+          <div class="overlay-text">
+
+            <div class="ot-col">
+              <p>The high country straddles the NSW–Victoria border, where the Murray River begins. Most of Australia's tallest peaks cluster around <strong class="park">Kosciuszko</strong>.</p>
+              <p>The triangles are every named peak in OpenStreetMap, sized by height. <strong class="park">Kosciuszko</strong> itself is a broad, gentle summit rather than a sharp spike. No Victorian peak reaches 2,000 m, and <strong class="park">Mount Bogong</strong> is the state's highest. The labelled peaks are the ones best known for hiking routes.</p>
+              <p>The two parks sit on opposite sides of the border: <strong class="park">Kosciuszko</strong> in <strong class="state nsw">NSW</strong> and <strong class="park">Alpine</strong> in <strong class="state vic">Victoria</strong>. Together they form the core of the Australian Alps, the only part of the continent that gets reliable winter snow, which is why the ski resorts of Thredbo, Perisher, Falls Creek and Mount Hotham sit here.</p>
+              <p>Many of the labelled peaks come with a classic walk. <strong class="park">Kosciuszko</strong> can be reached from Thredbo or Charlotte Pass in a day, while <strong class="park">Mount Bogong</strong> and <strong class="park">Mount Feathertop</strong> in Victoria are known for long, steep ridge climbs. <strong class="park">Mount Jagungal</strong>, to the north, is more remote and sees far fewer walkers.</p>
+              <p class="overlay-note">Triangle size shows relative peak height.</p>
+            </div>
+
+            <div class="ot-col">
+              <div class="map-inset">
+                <div id="vis_locator" class="chart-container chart-left"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. National Parks for Water -->
+    <section class="pure-g section-row align-bottom band band-sky">
+
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">Wonderful Water at National Parks</h2>
+      </div>
+
+      <!-- left (3/5): Wild Rivers -->
+      <div class="pure-u-1 pure-u-md-3-5 col-content">
+        <div class="map-overlay">
+          <div id="vis_wild_rivers" class="chart-container chart-left"></div>
+          <div class="legend-overlay legend-br" style="right: 70px; bottom: -30px;">
+            <div class="lg-row"><span class="lg-line" style="background:#5281b6;height:3px"></span> River</div>
+            <div class="lg-row"><span class="lg-line" style="background:#5fa8d3;height:1px"></span> Stream</div>
+            <div class="lg-row"><span class="lg-tri" style="border-bottom-color:#0d47a1"></span> Direction of flow</div>
+            <div class="lg-row"><span class="lg-line" style="background:#c62828;height:2px"></span> Walking track</div>
+            <div class="lg-row"><span class="lg-dash"></span> 4WD track</div>
+          </div>
+          <div class="overlay-stats overlay-stats-right">
+            <p class="big-stat">2,328 km <span>of mapped rivers and streams in <strong class="park">Franklin-Gordon Wild Rivers</strong></span></p>
+          </div>
+        </div>
+        <p class="map-caption"><strong class="park">Franklin-Gordon</strong>’s rivers are best explored by kayak. The low, wet terrain makes it almost impossible to maintain walking tracks, and most rivers flow west towards Macquarie Harbour.</p>
+      </div>
+
+      <!-- right (2/5): Blue Mountains -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content">
+        <div class="map-overlay">
+          <div id="vis_blue_mountains" class="chart-container chart-left"></div>
+
+          <div class="overlay-stats">
+            <p class="big-stat">99 <span>mapped waterfalls in the <strong class="park">Blue Mountains</strong></span></p>
+          </div>
+
+          <div class="legend-overlay legend-br">
+            <div class="lg-title">Waterfalls</div>
+            <div class="lg-row"><span class="lg-dot" style="background:#aabedf"></span> One waterfall</div>
+            <div class="lg-row"><span class="lg-dot" style="background:#3868b2"></span> Several close together</div>
+          </div>
+        </div>
+        <p class="map-caption" style="text-align: right;">The <strong class="park">Blue Mountains</strong> offers a different kind of water. Waterfalls cluster around Wentworth Falls and Katoomba in the centre of the park, and make destinations for weekend and day trips from Sydney.</p>
+      </div>
+
+    </section>
+
+    <!-- 07. What about Accessibility? -->
+    <section class="pure-g section-row align-bottom">
+
+      <div class="pure-u-1 col-content">
+        <h2 class="section-banner">What About Accessibility?</h2>
+      </div>
+
+      <!-- left (2/5): campsite proportional symbol map -->
+      <div class="pure-u-1 pure-u-md-2-5 col-content">
+        <div id="vis_campsite_map" class="chart-container chart-left"></div>
+      </div>
+
+      <!-- right (3/5): two text columns, then parallel coordinates -->
+      <div class="pure-u-1 pure-u-md-3-5">
+        <div class="pure-g">
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>Campsites, toilets and lookouts shape how long people stay in a park. The bubbles show where each park’s <span class="camp">campsites</span> are mapped, sized by count.</p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-2 col-content col-text">
+            <p>Each line compares one park against the best of the five. The <strong class="park">Blue Mountains</strong> leads on toilets and lookouts, which fits a park known for its views. <strong class="park">Alpine</strong> has the most campsites. <strong class="park">Franklin-Gordon</strong> barely registers on any measure. Use the dropdown to highlight one park.</p>
+          </div>
+          <div class="pure-u-1 col-content">
+            <div id="vis_accessibility" class="chart-container chart-left"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="site-footer">
+    <p>© 2026 Xavier Clonan. Visualisations and text licensed under
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+    <p>Data sources: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL),
+      <a href="https://open-elevation.com/">Open-Elevation</a>,
+      <a href="https://www.ga.gov.au/">Geoscience Australia</a> and
+      <a href="https://www.parks.vic.gov.au/">Parks Victoria</a>.
+      Underlying data remains under its original licences.</p>
+    </footer>
 
   </div>
 
-
   <script>
-  const embedOptions = {
-    actions: false,
-    mode: "vega-lite",
-    config: { background: 'transparent' } 
+  const SANS  = '"Source Sans 3", "Helvetica Neue", Arial, sans-serif';
+  const INK   = "#263238";
+  const MUTED = "#546e7a";
+  const GRID  = "#cddbc6";
+  const AXIS  = "#9fb09a";
+
+  // works in both Vega-Lite and Vega modes
+  const baseConfig = {
+    background: "transparent",
+    view: { stroke: null },
+    text: { font: SANS, fontSize: 15 },
+    title: {
+      font: SANS, fontSize: 21, fontWeight: 700, color: INK, anchor: "start",
+      subtitleFont: SANS, subtitleFontSize: 16, subtitleColor: MUTED
+    },
+    axis: {
+      labelLimit: 260,
+      labelFont: SANS, titleFont: SANS,
+      labelFontSize: 16, titleFontSize: 17,
+      labelColor: MUTED, titleColor: "#37474f", titleFontWeight: 400,
+      domainColor: AXIS, tickColor: AXIS, tickSize: 5,
+      gridColor: GRID, gridWidth: 0.75,
+      titlePadding: 10, labelPadding: 5
+    },
+    axisX: { grid: false },   // horizontal gridlines only (specs that set grid:true still win)
+    legend: {
+      titleFont: SANS, labelFont: SANS,
+      titleFontSize: 11, labelFontSize: 11, titleFontWeight: 700,
+      titleColor: INK, labelColor: INK,
+      padding: 8, cornerRadius: 4, fillColor: "rgba(255,255,255,0.85)"
+    }
   };
 
+  const embedOptions = { actions: false, mode: "vega-lite", config: { ...baseConfig, font: SANS } };
+  const vegaOptions  = { actions: false, mode: "vega", config: baseConfig };
 
-  vegaEmbed('#vis1_hexmap', 'hex_bin_pc.vg.json', embedOptions).catch(console.error);
-  vegaEmbed('#vis2_top_area', 'area_bp.vg.json', embedOptions).catch(console.error);
+  // horizontal y-axis titles: use on strip plot, elevation profile, lollipop
+  const editorialOptions = {
+    ...embedOptions,
+    config: {
+      ...embedOptions.config,
+      axisY: { titleAngle: 0, titleAlign: "left", titleAnchor: "end", titleX: 0, titleY: -12 }
+    }
+  };
 
+  function renderAll() {
+    vegaEmbed('#vis1_hexmap', 'hex_bin_pc.vg.json', vegaOptions).catch(console.error);
+    vegaEmbed('#vis2_top_area', 'area_bp.vg.json', editorialOptions).catch(console.error);
 
-  vegaEmbed('#vis3_trail_scatter', 'fwd_vs_hike.vg.json', embedOptions).catch(console.error);
-  vegaEmbed('#vis4_density_bar', 'trail_dends.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis3_trail_scatter', 'fwd_vs_hike.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis4_density_bar', 'trail_dends.vg.json', embedOptions).catch(console.error);
 
-  vegaEmbed('#vis5_campsite_map', 'prop_sym_map.vg.json', embedOptions).catch(console.error);
-  vegaEmbed('#vis6_amenity_ranking', 'access.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis_grampians_map', 'grampians.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis_gpt_profile', 'gpt_trail.vg.json', editorialOptions).catch(console.error);
+    vegaEmbed('#vis_lollipop', 'lp_mountains.vg.json', editorialOptions).catch(console.error);
 
-  vegaEmbed('#vis7_peak_bars', 'lp_mountains.vg.json', embedOptions).catch(console.error);
-  vegaEmbed('#vis8_elevation_map', 'waters.vg.json', embedOptions).catch(console.error);
-  </script>
+    vegaEmbed('#vis_alpine_map', 'mount.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis_locator', 'locator.vg.json', embedOptions).catch(console.error);
+
+    vegaEmbed('#vis_wild_rivers', 'wild_rivers.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis_blue_mountains', 'blue_mountains.vg.json', embedOptions).catch(console.error);
+
+    vegaEmbed('#vis_campsite_map', 'prop_sym_map.vg.json', embedOptions).catch(console.error);
+    vegaEmbed('#vis_accessibility', 'access.vg.json', embedOptions).catch(console.error);
+  }
+
+  // wait for the fonts, because Vega measures text when it renders
+  Promise.all([
+    document.fonts.load('400 11px "Source Sans 3"'),
+    document.fonts.load('600 11px "Source Sans 3"'),
+    document.fonts.load('700 11px "Source Sans 3"')
+  ]).catch(() => {}).then(renderAll);
+</script>
 
 </body>
 </html>

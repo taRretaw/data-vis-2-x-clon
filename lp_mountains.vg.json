@@ -1,16 +1,16 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 500,
+  "width": 600,
   "height": 350,
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv",
+    "url": "data/all_parks_stats.csv",
     "format": {"type": "csv", "parse": {"elevation_m_max": "number"}}
   },
   "transform": [
     {"filter": "isValid(datum.elevation_m_max) && datum.elevation_m_max > 0"},
     {"filter": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0"},
     {"calculate": "indexof(['kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0 ? 'New South Wales' : (indexof(['alpine national park','grampians (gariwerd) national park'], lower(datum.name)) >= 0 ? 'Victoria' : 'Tasmania')", "as": "state_fixed"},
-    {"calculate": "replace(datum.name, ' National Park', '')", "as": "short_name"}
+    {"calculate": "replace(replace(datum.name, ' National Park', ''), ' (Gariwerd)', '')", "as": "short_name"}
   ],
   "layer": [
     {
@@ -19,7 +19,15 @@
         "x": {"field": "name", "type": "nominal", "sort": "-y", "title": null, "axis": null},
         "y": {"field": "elevation_m_max", "type": "quantitative", "title": "Highest peak (m above sea level)"},
         "y2": {"datum": 0},
-        "color": {"field": "state_fixed", "type": "nominal", "title": "State"}
+        "color": {
+          "field": "state_fixed",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["New South Wales", "Victoria", "Tasmania"],
+            "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+          }
+        }
       }
     },
     {
@@ -27,11 +35,18 @@
       "encoding": {
         "x": {"field": "name", "type": "nominal", "sort": "-y"},
         "y": {"field": "elevation_m_max", "type": "quantitative"},
-        "color": {"field": "state_fixed", "type": "nominal", "title": "State"},
-        
+        "color": {
+          "field": "state_fixed",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["New South Wales", "Victoria", "Tasmania"],
+            "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+          }
+        },
         "tooltip": [
           {"field": "name", "type": "nominal", "title": "Park"},
-          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "state_fixed", "type": "nominal", "title": "State"},
           {"field": "elevation_m_max", "type": "quantitative", "title": "Highest peak (m)", "format": ","},
           {"field": "peaks_counts", "type": "quantitative", "title": "Mapped peaks"}
         ]

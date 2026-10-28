@@ -1,12 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
-  "height": 600,
+  "width": 390,
+  "height": 660,
   "projection": {
-    "type": "mercator",
-    "rotate": [-142.4325, 0, 0],
-    "center": [0, -37.314],
-    "scale": 30000
+    "type": "mercator"
   },
   "layer": [
     {
@@ -30,7 +27,7 @@
             "type": "symbol",
             "symbolType": "square",
             "symbolSize": 120,
-            "orient": "bottom-right",
+            "orient": "top-left",
             "direction": "vertical",
             "fillColor": "rgba(255,255,255,0.85)",
             "padding": 6,
@@ -39,13 +36,6 @@
           }
         }
       }
-    },
-    {
-      "data": {
-        "url": "data/grampians.json",
-        "format": {"type": "topojson", "feature": "grampians_rivers"}
-      },
-      "mark": {"type": "geoshape", "filled": false, "stroke": "#4a90c2", "strokeWidth": 1}
     },
     {
       "data": {
@@ -77,7 +67,7 @@
         "shape": "triangle-up",
         "filled": true,
         "color": "#000000",
-        "size": 45,
+        "size": 50,
         "stroke": "#ffffff",
         "strokeWidth": 0.8
       },

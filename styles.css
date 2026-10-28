@@ -1,9 +1,27 @@
+:root {
+  /* fonts: serif for reading, sans for anything the reader decodes */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Crimson Pro", Georgia, serif; 
 
+  --ink: #263238;
+  --muted: #546e7a;
+
+  /* one text width for the whole page. In rem (not ch) so serif and sans
+     elements can't drift apart. 20.25rem = 324px = half of a 3/5 column */
+  --measure: 20.25rem;
+  --col-gap: 28px;
+}
+
+.pure-g [class*="pure-u"] {
+  font-family: var(--font-body);
+}
 
 body {
   background-color: #fcfcfc;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #333;
+  font-family: var(--font-body);
+  font-size: 1.04rem;
+  color: var(--ink);
   margin: 0;
   padding: 0;
 }
@@ -41,7 +59,182 @@ body {
   margin-bottom: 40px;
 }
 
-.subtitle {
-  color: #666;
-  font-size: 1.1rem;
+.chart-left { justify-content: flex-start; }
+
+/* ---------- headings ---------- */
+h1, h2 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--ink);
 }
+h1 {
+  font-size: 2.6rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.15rem;
+  margin: 0;
+}
+.section-banner {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #c9d8c0;
+}
+
+/* ---------- body text: everything shares --measure ---------- */
+.col-text p {
+  margin: 0 0 12px;
+  line-height: 1.55;
+  max-width: var(--measure);
+}
+
+.map-caption {
+  margin: 12px 0 0;
+  line-height: 1.55;
+  max-width: var(--measure);
+}
+
+/* ---------- inline emphasis (darkened so they read as text on the green) ---------- */
+.park { font-weight: 700; }
+.state { font-weight: 700; }
+.nsw  { color: #6a3d9a; }
+.vic  { color: #85600a; }
+.tas  { color: #2a6f71; }
+.camp { color: #b23c00; font-weight: 700; }
+
+/* ---------- map overlays ---------- */
+.map-overlay { position: relative; }
+
+/* two text columns, each exactly one measure wide */
+.overlay-text {
+  position: absolute;
+  top: 24px;
+  left: 12px;
+  width: calc(2 * var(--measure) + var(--col-gap));
+  display: grid;
+  grid-template-columns: repeat(2, var(--measure));
+  column-gap: var(--col-gap);
+  align-items: start;
+  pointer-events: none;
+}
+.overlay-text p { margin: 0 0 12px; line-height: 1.55; }
+.overlay-note { font-family: var(--font-sans); font-size: 0.8rem; color: var(--muted); }
+
+.map-inset {
+  margin-top: 14px;
+  width: 260px;          /* matches locator.vg.json */
+  max-width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.12);   /* no shadow: legends don't have one either */
+}
+
+/* ---------- legends: one style for every CSS legend ---------- */
+.legend-overlay {
+  position: absolute;
+  background: rgba(255,255,255,0.85);
+  padding: 8px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink);
+  pointer-events: none;
+}
+.legend-br { bottom: 12px; right: 12px; }
+.legend-tr { top: 12px; right: 12px; }
+
+.lg-title, .wf-title { font-weight: 700; margin-bottom: 4px; }
+.lg-row { display: flex; align-items: center; gap: 8px; }
+.lg-line { width: 22px; height: 3px; background: #d84315; border-radius: 2px; }
+.lg-tri  { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 9px solid #000; }
+.lg-dash { width: 22px; height: 0; border-top: 2px dashed #c62828; }
+.lg-dot  { width: 10px; height: 10px; border-radius: 50%; flex: none; margin: 0 6px; }
+
+/* ---------- big numbers (sans, tabular figures) ---------- */
+.big-stat {
+  font-family: var(--font-sans);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+  margin: 50px 0;
+}
+.big-stat span {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--muted);
+  max-width: var(--measure);
+}
+
+/* stats over the maps' empty corners */
+.overlay-stats { position: absolute; left: 12px; top: 160px; width: 44%; pointer-events: none; }
+.overlay-stats .big-stat { margin-bottom: 18px; }
+.overlay-stats-right { top: 60px; left: auto; right: -40px; width: 33%; }
+
+/* ---------- accessibility chart: dropdown sits underneath ---------- */
+#vis_accessibility {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.vega-bindings {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+.vega-bindings select { font-family: inherit; }
+
+/* gap above the Grampians elevation profile (side-by-side layout only) */
+@media (min-width: 48em) {
+  #vis_gpt_profile { margin-top: 75px; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 800px) {
+  .overlay-text,
+  .overlay-stats {
+    position: static;
+    width: auto;
+    margin-top: 12px;
+  }
+  .overlay-text { grid-template-columns: 1fr; }
+}
+
+/* ---------- footer ---------- */
+.site-footer {
+  margin-top: 40px;
+  padding: 16px 12px 0;
+  border-top: 2px solid #c9d8c0;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.site-footer p { margin: 0 0 6px; max-width: 100ch; }
+.site-footer a { color: inherit; text-decoration: underline; }
+
+/* ---------- possibly unused (check, then delete) ---------- */
+.map-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; font-size: 0.85rem; color: #37474f; }
+.lg-item { display: inline-flex; align-items: center; gap: 6px; }
+.elev-legend { display: flex; align-items: center; margin: 0 0 28px; font-size: 0.8rem; }
+.elev-title  { margin-right: 14px; font-weight: 600; }
+.elev-swatch { position: relative; width: 44px; height: 12px; }
+.elev-swatch i { position: absolute; top: 15px; left: 0; font-style: normal; font-size: 0.7rem; color: var(--muted); }
+
+.section-row.band {
+  margin: 0 -20px;
+  padding: 32px 20px;
+  background: var(--band);
+}
+.band .section-banner { border-bottom-color: var(--rule); }
+
+.band-green { --band: #eaf4e4; --rule: #c9d8c0; }
+.band-sand  { --band: #f6efdd; --rule: #e0d3b2; }
+.band-stone { --band: #e6eaed; --rule: #c5cdd3; }
+.band-sky   { --band: #e1eef5; --rule: #bcd3e0; }

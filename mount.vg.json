@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 1200,
+  "width": 1000,
   "height": 1120,
   "background": "transparent",
   "config": {"view": {"stroke": null}},
@@ -38,7 +38,7 @@
         "url": "data/alpine.json",
         "format": {"type": "topojson", "feature": "fwd"}
     },
-    "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1, "strokeDash": [4, 3], "opacity": 0.7}
+    "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1, "strokeDash": [4, 3], "opacity": 0.9}
     },
     {
     "data": {
@@ -56,7 +56,7 @@
     {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
     {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"}
   ],
-  "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#455a64", "stroke": "#ffffff", "strokeWidth": 0.5},
+  "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#62cdff", "stroke": "#ffffff", "strokeWidth": 0.5},
   "encoding": {
     "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
     "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
@@ -77,46 +77,91 @@
       {"field": "elev", "type": "quantitative", "title": "Elevation (m)"}
     ]
   }
-},
-{
-  "data": {
-    "url": "data/alpine.json",
-    "format": {"type": "topojson", "feature": "peaks"}
-  },
-  "transform": [
-    {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
-    {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
-    {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"}
-  ],
-  "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#000000", "stroke": "#ffffff", "strokeWidth": 1},
-  "encoding": {
-    "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
-    "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
-    "size": {
-      "field": "elev",
-      "type": "quantitative",
-      "scale": {"domain": [1000, 2250], "range": [25, 160]},
-      "legend": null
+    },
+    {
+    "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "peaks"}
+    },
+    "transform": [
+        {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+        {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
+        {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"}
+    ],
+    "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#000000", "stroke": "#ffffff", "strokeWidth": 1},
+    "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "size": {
+        "field": "elev",
+        "type": "quantitative",
+        "scale": {"domain": [1000, 2250], "range": [25, 160]},
+        "legend": null
+        }
     }
-  }
-},
-{
-  "data": {
-    "url": "data/alpine.json",
-    "format": {"type": "topojson", "feature": "peaks"}
-  },
-  "transform": [
-    {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
-    {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
-    {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"},
-    {"calculate": "datum.properties.name + ' (' + format(datum.elev, ',.0f') + ' m)'", "as": "peak_label"}
-  ],
-  "mark": {"type": "text", "align": "left", "dx": 9, "dy": -3, "fontSize": 17, "fontWeight": 800, "color": "#000000", "stroke": "#ffffff", "strokeWidth": 1, "strokeJoin": "round"},
-  "encoding": {
-    "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
-    "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
-    "text": {"field": "peak_label", "type": "nominal"}
-  }
-}
+    },
+    {
+    "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "peaks"}
+    },
+    "transform": [
+        {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+        {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
+        {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"},
+        {"calculate": "datum.properties.name + ' (' + format(datum.elev, ',.0f') + ' m)'", "as": "peak_label"}
+    ],
+    "mark": {"type": "text", "align": "left", "dx": 9, "dy": -3, "fontSize": 17, "fontWeight": 800, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 4, "strokeJoin": "round"},
+    "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "text": {"field": "peak_label", "type": "nominal"}
+    }
+    },
+    {
+    "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "peaks"}
+    },
+    "transform": [
+        {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+        {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
+        {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"},
+        {"calculate": "datum.properties.name + ' (' + format(datum.elev, ',.0f') + ' m)'", "as": "peak_label"}
+    ],
+    "mark": {"type": "text", "align": "left", "dx": 9, "dy": -3, "fontSize": 17, "fontWeight": 800, "color": "#000000", "strokeJoin": "round"},
+    "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "text": {"field": "peak_label", "type": "nominal"}
+    }
+    },
+    {
+    "data": {
+        "values": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [[147.55, -37.50], [148.115, -37.50]]
+            }
+            }
+        ]
+        },
+        "format": {"type": "json", "property": "features"}
+    },
+    "mark": {"type": "geoshape", "filled": false, "stroke": "#263238", "strokeWidth": 3}
+    },
+    {
+    "data": {"values": [{"lon": 147.825, "lat": -37.50}]},
+    "mark": {"type": "text", "text": "50 km", "dy": -15, "fontSize": 15, "fontWeight": 600, "color": "#263238"},
+    "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+    }
+    }
+
   ]
 }

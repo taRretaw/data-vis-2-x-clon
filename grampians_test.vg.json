@@ -3,10 +3,7 @@
   "width": 400,
   "height": 800,
   "projection": {
-    "type": "mercator",
-    "rotate": [-142.4325, 0, 0],
-    "center": [0, -37.2534],
-    "scale": 30000
+    "type": "mercator"
   },
   "layer": [
     {

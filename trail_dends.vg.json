@@ -4,16 +4,25 @@
     "url": "data/all_parks_stats.csv",
     "format": {"type": "csv", "parse": {"trail_density": "number"}}
   },
-  "width": 200,
-  "height": 200,
+  "width": 250,
+  "height": 250,
   "transform": [
     {"filter": "isValid(datum.trail_density)"},
-    {"filter": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0"}
+    {"filter": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0"},
+    {"calculate": "replace(replace(datum.name, ' National Park', ''), ' (Gariwerd)', '')", "as": "short_name"}
   ],
   "mark": {"type": "bar", "cornerRadiusEnd": 4},
   "encoding": {
-    "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
+    "y": {"field": "short_name", "type": "nominal", "sort": "-x", "title": null},
     "x": {"field": "trail_density", "type": "quantitative", "title": "Trail density (m of track per km²)"},
-    "color": {"field": "state", "type": "nominal", "title": "State"}
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "domain": ["New South Wales", "Victoria", "Tasmania"],
+        "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+      }
+    }
   }
 }

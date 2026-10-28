@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 460,
+  "width": 640,
   "height": 320,
   "padding": {"right": 10, "left": 5, "top": 10, "bottom": 5},
   "data": {
@@ -58,7 +58,7 @@
       "type": "nominal",
       "sort": ["Campsites", "Toilets", "Lookouts"],
       "title": null,
-      "scale": {"range": [20, 360]},
+      "scale": {"range": [20, 560]},
       "axis": {"labelAngle": 0, "labelFontSize": 13, "labelFontWeight": 600, "grid": true, "domain": false, "ticks": false}
     },
     "y": {
@@ -67,7 +67,16 @@
       "title": "Relative to the highest of these five parks (%)",
       "scale": {"domain": [0, 100]}
     },
-    "color": {"field": "state", "type": "nominal", "title": "State"}
+    "color": {
+    "field": "state",
+    "type": "nominal",
+    "title": "State",
+    "scale": {
+      "domain": ["New South Wales", "Victoria", "Tasmania"],
+      "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+    },
+    "legend": {"orient": "top", "direction": "horizontal", "titleFontSize": 12, "labelFontSize": 12}
+  }
   },
   "layer": [
     {

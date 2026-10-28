@@ -1,13 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "National Park Density",
-    "subtitle": "Percentage of 25km hex cell area designated as National Park",
-    "fontSize": 16,
-    "subtitleFontSize": 12,
-    "anchor": "start",
-    "offset": 15
-  },
+  
   "width": 400,
   "height": 500,
   "projection": {
@@ -20,14 +13,14 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "url": "data/spatial_v2.json",
         "format": {"type": "topojson", "feature": "ne_50m_ocean"}
       },
       "mark": {"type": "geoshape", "fill": "#d4edf9"}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "url": "data/spatial_v2.json",
         "format": {"type": "topojson", "feature": "ne_50m_admin_1_states_provinces"}
       },
       "mark": {
@@ -39,7 +32,7 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/spatial.topojson",
+        "url": "data/spatial_v2.json",
         "format": {"type": "topojson", "feature": "nat_park_makeup"}
       },
       "transform": [
@@ -50,16 +43,24 @@
       "mark": {
         "type": "geoshape",
         "stroke": "#2e7d32",
-        "strokeWidth": 0.2,
+        "strokeWidth": 0.0,
         "opacity": 0.85
       },
       "encoding": {
         "color": {
           "field": "properties.Reprojected_pc",
           "type": "quantitative",
-          "title": "Park Coverage (%)",
+          "title": "NP Coverage (%)",
           "scale": {
             "scheme": "greens"
+          },
+        "legend": {
+            "orient": "bottom-right",
+            "direction": "vertical",
+            "fillColor": "rgba(255,255,255,0.85)",
+            "padding": 3,
+            "titleFontSize": 11,
+            "labelFontSize": 10
           }
         },
         "tooltip": [

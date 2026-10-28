@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 260,
+  "height": 325,
+  "background": "transparent",
+  "config": {"view": {"stroke": null}},
+  "projection": {
+    "type": "conicEqualArea",
+    "rotate": [-147, 0, 0],
+    "center": [0, -36],
+    "parallels": [-18, -36],
+    "scale": 1170
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "ne_50m_ocean"}
+      },
+      "mark": {"type": "geoshape", "fill": "#d4edf9"}
+    },
+    {
+      "data": {
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "ne_50m_admin_1_states_provinces"}
+      },
+      "mark": {"type": "geoshape", "fill": "#eef2f5", "stroke": "#b0bec5", "strokeWidth": 0.8}
+    },
+    {
+      "data": {
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "top_60"}
+      },
+      "transform": [
+        {"filter": "indexof(['kosciuszko national park','alpine national park','grampians (gariwerd) national park','blue mountains national park','franklin-gordon wild rivers national park'], lower(datum.properties.name)) < 0"}
+      ],
+      "mark": {"type": "geoshape", "fill": "#c8e6c9", "stroke": "#81c784", "strokeWidth": 0.4, "opacity": 0.5}
+    },
+    {
+      "data": {
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "top_60"}
+      },
+      "transform": [
+        {"filter": "indexof(['kosciuszko national park','alpine national park','grampians (gariwerd) national park','blue mountains national park','franklin-gordon wild rivers national park'], lower(datum.properties.name)) >= 0"}
+      ],
+      "mark": {"type": "geoshape", "stroke": "#263238", "strokeWidth": 1},
+      "encoding": {
+        "fill": {
+          "field": "properties.name",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Kosciuszko National Park",
+              "Blue Mountains National Park",
+              "Alpine National Park",
+              "Grampians (Gariwerd) National Park",
+              "Franklin-Gordon Wild Rivers National Park"
+            ],
+            "range": ["#6a3d9a", "#6a3d9a", "#e0a526", "#e0a526", "#4fa3a5"]
+          },
+          "legend": null
+        },
+        "tooltip": [{"field": "properties.name", "type": "nominal", "title": "Park"}]
+      }
+    },
+    {
+      "data": {
+        "url": "data/spatial_v2.json",
+        "format": {"type": "topojson", "feature": "top_60"}
+      },
+      "transform": [
+        {"calculate": "geoCentroid(null, datum)[0]", "as": "clon"},
+        {"calculate": "geoCentroid(null, datum)[1]", "as": "clat"},
+        {"calculate": "lower(datum.properties.name)", "as": "key"}
+      ],
+      "layer": [
+        {
+          "transform": [{"filter": "datum.key === 'kosciuszko national park'"}],
+          "layer": [
+            {"mark": {"type": "text", "align": "left", "dx": 9, "dy": -4, "fontSize": 11, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 3, "strokeJoin": "round"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Kosciuszko"}}},
+            {"mark": {"type": "text", "align": "left", "dx": 9, "dy": -4, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Kosciuszko"}}}
+          ]
+        },
+        {
+          "transform": [{"filter": "datum.key === 'alpine national park'"}],
+          "layer": [
+            {"mark": {"type": "text", "align": "right", "dx": -9, "dy": 8, "fontSize": 11, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 3, "strokeJoin": "round"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Alpine"}}},
+            {"mark": {"type": "text", "align": "right", "dx": -9, "dy": 8, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Alpine"}}}
+          ]
+        },
+        {
+          "transform": [{"filter": "datum.key === 'grampians (gariwerd) national park'"}],
+          "layer": [
+            {"mark": {"type": "text", "align": "center", "dx": 0, "dy": -12, "fontSize": 11, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 3, "strokeJoin": "round"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Grampians"}}},
+            {"mark": {"type": "text", "align": "center", "dx": 0, "dy": -12, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Grampians"}}}
+          ]
+        },
+        {
+          "transform": [{"filter": "datum.key === 'blue mountains national park'"}],
+          "layer": [
+            {"mark": {"type": "text", "align": "right", "dx": -9, "dy": 0, "fontSize": 11, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 3, "strokeJoin": "round"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Blue Mountains"}}},
+            {"mark": {"type": "text", "align": "right", "dx": -9, "dy": 0, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Blue Mountains"}}}
+          ]
+        },
+        {
+          "transform": [{"filter": "datum.key === 'franklin-gordon wild rivers national park'"}],
+          "layer": [
+            {"mark": {"type": "text", "align": "left", "dx": 10, "dy": 0, "fontSize": 11, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 3, "strokeJoin": "round"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Wild Rivers"}}},
+            {"mark": {"type": "text", "align": "left", "dx": 10, "dy": 0, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+             "encoding": {"longitude": {"field": "clon", "type": "quantitative"}, "latitude": {"field": "clat", "type": "quantitative"}, "text": {"value": "Wild Rivers"}}}
+          ]
+        }
+      ]
+    }
+  ]
+}

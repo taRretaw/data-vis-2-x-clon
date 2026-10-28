@@ -1,67 +1,88 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Park Access Types: Hiking vs 4WD",
-    "subtitle": "Comparing walking track length against 4WD track length per park (km)",
-    "fontSize": 16,
-    "anchor": "start"
-  },
-  "width": 450,
-  "height": 350,
-  "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
-  },
+  "width": 520,
+  "height": 400,
+  "data": {"url": "data/all_parks_stats.csv"},
   "transform": [
-    {
-      "filter": "isValid(datum.walking_tracks_length) && datum.walking_tracks_length > 0 && isValid(datum['4wd_length']) && datum['4wd_length'] > 0"
-    },
-    {
-      "calculate": "datum.walking_tracks_length / 1000",
-      "as": "walking_km"
-    },
-    {
-      "calculate": "datum['4wd_length'] / 1000",
-      "as": "4wd_km"
-    }
+    {"filter": "indexof(['New South Wales','Victoria','Tasmania'], datum.state) >= 0"},
+    {"filter": "isValid(datum.walking_tracks_length) && datum.walking_tracks_length > 0 && isValid(datum['4wd_length']) && datum['4wd_length'] > 0"},
+    {"calculate": "datum.walking_tracks_length / 1000", "as": "walking_km"},
+    {"calculate": "datum['4wd_length'] / 1000", "as": "4wd_km"},
+    {"calculate": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0", "as": "is_case"},
+    {"calculate": "replace(replace(datum.name, ' National Park', ''), ' (Gariwerd)', '')", "as": "short_name"}
   ],
-  "mark": {
-    "type": "circle",
-    "size": 80,
-    "opacity": 0.8,
-    "stroke": "#ffffff",
-    "strokeWidth": 1
-  },
   "encoding": {
     "x": {
       "field": "walking_km",
       "type": "quantitative",
-      "title": "Walking Track Length (km - Log Scale)",
+      "title": "Walking track length per park (km)",
       "scale": {"type": "log"},
-      "axis": {
-        "format": ",",
-        "values": [0.1, 1, 10, 100, 1000, 10000]
-      }
+      "axis": {"format": ",", "values": [0.1, 1, 10, 100, 1000, 10000]}
     },
     "y": {
       "field": "4wd_km",
       "type": "quantitative",
-      "title": "4WD Track Length (km - Log Scale)",
+      "title": "4WD track length per park (km)",
       "scale": {"type": "log"},
-      "axis": {
-        "format": ",",
-        "values": [0.1, 1, 10, 100, 1000, 10000]
+      "axis": {"format": ",", "values": [0.1, 1, 10, 100, 1000, 10000]}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "circle", "size": 70, "opacity": 0.55, "stroke": "#ffffff", "strokeWidth": 1},
+      "encoding": {
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "domain": ["New South Wales", "Victoria", "Tasmania"],
+            "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+          },
+          "legend": {"orient": "top", "direction": "horizontal", "titleFontSize": 12, "labelFontSize": 12}
+        },
+        "tooltip": [
+          {"field": "name", "type": "nominal", "title": "Park"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "walking_km", "type": "quantitative", "title": "Walking (km)", "format": ",.1f"},
+          {"field": "4wd_km", "type": "quantitative", "title": "4WD (km)", "format": ",.1f"}
+        ]
       }
     },
-    "color": {
-      "field": "state",
-      "type": "nominal",
-      "title": "State"
+    {
+      "transform": [{"filter": "datum.is_case"}],
+      "mark": {"type": "circle", "size": 150, "opacity": 1, "stroke": "#263238", "strokeWidth": 2},
+      "encoding": {
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["New South Wales", "Victoria", "Tasmania"],
+            "range": ["#6a3d9a", "#e0a526", "#4fa3a5"]
+          },
+          "legend": null
+        }
+      }
     },
-    "tooltip": [
-      {"field": "name", "type": "nominal", "title": "Park"},
-      {"field": "state", "type": "nominal", "title": "State"},
-      {"field": "walking_km", "type": "quantitative", "title": "Walking (km)", "format": ",.1f"},
-      {"field": "4wd_km", "type": "quantitative", "title": "4WD (km)", "format": ",.1f"}
-    ]
-  }
+    {
+      "transform": [{"filter": "datum.is_case && indexof(['kosciuszko national park','grampians (gariwerd) national park'], lower(datum.name)) < 0"}],
+      "mark": {"type": "text", "align": "left", "dx": 11, "dy": -4, "fontSize": 12, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 4, "strokeJoin": "round"},
+      "encoding": {"text": {"field": "short_name", "type": "nominal"}}
+    },
+    {
+      "transform": [{"filter": "datum.is_case && indexof(['kosciuszko national park','grampians (gariwerd) national park'], lower(datum.name)) < 0"}],
+      "mark": {"type": "text", "align": "left", "dx": 11, "dy": -4, "fontSize": 12, "fontWeight": 600, "color": "#263238"},
+      "encoding": {"text": {"field": "short_name", "type": "nominal"}}
+    },
+    {
+      "transform": [{"filter": "indexof(['kosciuszko national park','grampians (gariwerd) national park'], lower(datum.name)) >= 0"}],
+      "mark": {"type": "text", "align": "right", "dx": -11, "dy": -4, "fontSize": 12, "fontWeight": 600, "color": "#ffffff", "stroke": "#ffffff", "strokeWidth": 4, "strokeJoin": "round"},
+      "encoding": {"text": {"field": "short_name", "type": "nominal"}}
+    },
+    {
+      "transform": [{"filter": "indexof(['kosciuszko national park','grampians (gariwerd) national park'], lower(datum.name)) >= 0"}],
+      "mark": {"type": "text", "align": "right", "dx": -11, "dy": -4, "fontSize": 12, "fontWeight": 600, "color": "#263238"},
+      "encoding": {"text": {"field": "short_name", "type": "nominal"}}
+    }
+  ]
 }
