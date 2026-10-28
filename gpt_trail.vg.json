@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "data/GPT_elevation.csv",
+    "format": {"type": "csv", "parse": {"dist_along": "number", "elevation": "number"}}
+    },
+  "width": 600,
+  "height": 220,
+  "background": "transparent",
+  "config": {"view": {"stroke": null}},
+  "transform": [
+    {"calculate": "datum.dist_along / 1000", "as": "dist_km"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "area", "color": "#d84315", "opacity": 0.15},
+      "encoding": {
+        "x": {
+            "field": "dist_km",
+            "type": "quantitative",
+            "title": "Distance along trail (km)",
+            "scale": {"domain": [0, 150], "nice": false}
+            },
+        "y": {"field": "elevation", "type": "quantitative", "title": "Elevation (m)", "scale": {"zero": false}}
+      }
+    },
+    {
+      "mark": {"type": "line", "color": "#d84315", "strokeWidth": 2.5, "strokeJoin": "round"},
+      "encoding": {
+        "x": {"field": "dist_km", "type": "quantitative"},
+        "y": {"field": "elevation", "type": "quantitative", "scale": {"zero": false}}
+      }
+    },
+    {
+      "transform": [
+        {"joinaggregate": [{"op": "max", "field": "elevation", "as": "max_elev"}]},
+        {"filter": "datum.elevation === datum.max_elev"},
+        {"calculate": "'Highest point: ' + format(datum.elevation, ',.0f') + ' m'", "as": "label"}
+      ],
+      "mark": {"type": "point", "filled": true, "color": "#d84315", "size": 70, "stroke": "#ffffff", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "dist_km", "type": "quantitative"},
+        "y": {"field": "elevation", "type": "quantitative"}
+      }
+    },
+    
+    {
+        "data": {"values": [{"km": 60, "elev": 1167}]},
+        "mark": {"type": "text", "text": "Durd Durd (1,167 m)", "align": "right", "dx": -8, "dy": -2, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+        "encoding": {
+            "x": {"field": "km", "type": "quantitative"},
+            "y": {"field": "elev", "type": "quantitative"}
+        }
+    },
+    {
+        "data": {"values": [{"km": 68, "elev": 1167}]},
+        "mark": {"type": "text", "text": "Mt William (1,167 m)", "align": "left", "dx": 8, "dy": -2, "fontSize": 11, "fontWeight": 600, "color": "#263238"},
+        "encoding": {
+            "x": {"field": "km", "type": "quantitative"},
+            "y": {"field": "elev", "type": "quantitative"}
+        }
+    }
+  ]
+}

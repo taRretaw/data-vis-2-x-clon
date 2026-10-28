@@ -11,20 +11,37 @@
   "width": 500,
   "height": 380,
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+    "url": "data/all_parks_stats.csv"
   },
   "transform": [
     {
-      "filter": "isValid(datum.park_area) && datum.park_area > 0 && isValid(datum.state)"
+    "filter": "isValid(datum.park_area) && datum.park_area > 10000 && isValid(datum.state)"
     },
+    {
+    "filter": {
+      "field": "state",
+      "oneOf": ["Victoria", "Tasmania", "New South Wales"]
+    }
+  },
     {
       "calculate": "datum.park_area / 1000000",
       "as": "area_km2"
     },
     {
-      "calculate": "(random() - 0.5) * 35",
-      "as": "jitter"
-    }
+      "calculate": "log(datum.area_km2)/ log(10)",
+      "as": "log_area"
+    },
+    {
+    "bin": {"maxbins": 40},
+    "field": "log_area",
+    "as": "bin_val"
+  },
+  {
+    "stack": null,
+    "groupby": ["state", "bin_val"],
+    "as": ["stack_offset", "stack_end"],
+    "offset": "center"
+  }
   ],
   "mark": {
     "type": "circle",
@@ -44,7 +61,7 @@
       }
     },
     "xOffset": {
-      "field": "jitter",
+      "field": "stack_offset",
       "type": "quantitative"
     },
     "y": {

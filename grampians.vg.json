@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 600,
+  "projection": {
+    "type": "mercator",
+    "rotate": [-142.4325, 0, 0],
+    "center": [0, -37.314],
+    "scale": 30000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_elev_polygons"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.3},
+      "encoding": {
+        "color": {
+          "field": "properties.ELEV_MAX",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [200, 400, 600, 800, 1000, 1200, 1500, 1800],
+            "range": ["#b7cf9f", "#d3dfa2", "#ebe3a6", "#e6cf94", "#d4b07a",
+                      "#b88a63", "#9a7058", "#8a7f7a", "#e8e6e3"]
+          },
+          "legend": {
+            "title": "Elevation (m)",
+            "type": "symbol",
+            "symbolType": "square",
+            "symbolSize": 120,
+            "orient": "bottom-right",
+            "direction": "vertical",
+            "fillColor": "rgba(255,255,255,0.85)",
+            "padding": 6,
+            "titleFontSize": 11,
+            "labelFontSize": 10
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_rivers"}
+      },
+      "mark": {"type": "geoshape", "filled": false, "stroke": "#4a90c2", "strokeWidth": 1}
+    },
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_GPT"}
+      },
+      "mark": {
+        "type": "geoshape", "filled": false, "stroke": "#ffffff",
+        "strokeWidth": 6, "strokeCap": "round", "strokeJoin": "round"
+      }
+    },
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_GPT"}
+      },
+      "mark": {
+        "type": "geoshape", "filled": false, "stroke": "#d84315",
+        "strokeWidth": 3, "strokeCap": "round", "strokeJoin": "round"
+      }
+    },
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_peaks"}
+      },
+      "mark": {
+        "type": "point",
+        "shape": "triangle-up",
+        "filled": true,
+        "color": "#000000",
+        "size": 45,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "tooltip": [{"field": "properties.name", "type": "nominal", "title": "Peak"}]
+      }
+    },
+    {
+      "data": {
+        "values": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [[142.10, -37.68], [142.3272, -37.68]]
+              }
+            }
+          ]
+        },
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {"type": "geoshape", "filled": false, "stroke": "#263238", "strokeWidth": 3}
+    },
+    {
+      "data": {"values": [{"lon": 142.2136, "lat": -37.68}]},
+      "mark": {"type": "text", "text": "20 km", "dy": -9, "fontSize": 11, "color": "#263238"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      }
+  }
+
+  ]
+}

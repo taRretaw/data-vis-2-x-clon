@@ -1,16 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Tourist Accessibility Profiles (Top 10 Parks)",
-    "subtitle": "Comparing normalized facility counts (0 - 100% scale) across key visitor amenities",
-    "fontSize": 16,
-    "anchor": "start",
-    "offset": 15
-  },
-  "width": 500,
+  "width": 460,
   "height": 320,
+  "padding": {"right": 10, "left": 5, "top": 10, "bottom": 5},
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv"
+    "url": "data/all_parks_stats.csv"
   },
   "params": [
     {
@@ -18,171 +12,112 @@
       "value": null,
       "bind": {
         "input": "select",
+        "name": "Highlight a park: ",
         "options": [
           null,
           "Kosciuszko National Park",
-          "Grampians National Park",
-          "Wilsons Promontory National Park",
           "Alpine National Park",
-          "Barrington Tops National Park",
+          "Grampians (Gariwerd) National Park",
           "Blue Mountains National Park",
-          "Cradle Mountain-Lake St Clair National Park",
-          "Freycinet National Park",
-          "Mount Buffalo National Park",
-          "Morton National Park"
+          "Franklin-Gordon Wild Rivers National Park"
         ],
         "labels": [
-          "All Parks Highlighted",
+          "All five parks",
           "Kosciuszko",
-          "Grampians",
-          "Wilsons Promontory",
           "Alpine",
-          "Barrington Tops",
+          "Grampians",
           "Blue Mountains",
-          "Cradle Mountain",
-          "Freycinet",
-          "Mount Buffalo",
-          "Morton"
-        ],
-        "name": "Select Park: "
+          "Franklin-Gordon Wild Rivers"
+        ]
       }
     }
   ],
   "transform": [
-    {
-      "filter": "isValid(datum.campsites_counts) && isValid(datum.toilet_count) && isValid(datum.lookouts_counts) && isValid(datum.waterfalls_counts)"
-    },
+    {"filter": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0"},
+    {"filter": "isValid(datum.campsites_counts) && isValid(datum.toilet_count) && isValid(datum.lookouts_counts)"},
     {"calculate": "toNumber(datum.campsites_counts)", "as": "num_campsites"},
     {"calculate": "toNumber(datum.toilet_count)", "as": "num_toilets"},
     {"calculate": "toNumber(datum.lookouts_counts)", "as": "num_lookouts"},
-    {"calculate": "toNumber(datum.waterfalls_counts)", "as": "num_waterfalls"},
-    {
-      "calculate": "datum.num_campsites + datum.num_toilets + datum.num_lookouts + datum.num_waterfalls",
-      "as": "total_fac"
-    },
-    {
-      "window": [{"op": "rank", "as": "rank"}],
-      "sort": [{"field": "total_fac", "order": "descending"}]
-    },
-    {
-      "filter": "datum.rank <= 10"
-    },
+    {"calculate": "replace(replace(datum.name, ' National Park', ''), ' (Gariwerd)', '')", "as": "short_name"},
     {
       "joinaggregate": [
         {"op": "max", "field": "num_campsites", "as": "max_camp"},
         {"op": "max", "field": "num_toilets", "as": "max_toilet"},
-        {"op": "max", "field": "num_lookouts", "as": "max_lookout"},
-        {"op": "max", "field": "num_waterfalls", "as": "max_waterfall"}
+        {"op": "max", "field": "num_lookouts", "as": "max_lookout"}
       ]
     },
-    {
-      "calculate": "datum.max_camp > 0 ? (datum.num_campsites / datum.max_camp) * 100 : 0",
-      "as": "Campsites"
-    },
-    {
-      "calculate": "datum.max_toilet > 0 ? (datum.num_toilets / datum.max_toilet) * 100 : 0",
-      "as": "Toilets"
-    },
-    {
-      "calculate": "datum.max_lookout > 0 ? (datum.num_lookouts / datum.max_lookout) * 100 : 0",
-      "as": "Lookouts"
-    },
-    {
-      "calculate": "datum.max_waterfall > 0 ? (datum.num_waterfalls / datum.max_waterfall) * 100 : 0",
-      "as": "Waterfalls"
-    },
-    {
-      "fold": ["Campsites", "Toilets", "Lookouts", "Waterfalls"],
-      "as": ["Metric", "NormalisedScored"]
-    }
+    {"calculate": "datum.max_camp > 0 ? (datum.num_campsites / datum.max_camp) * 100 : 0", "as": "Campsites"},
+    {"calculate": "datum.max_toilet > 0 ? (datum.num_toilets / datum.max_toilet) * 100 : 0", "as": "Toilets"},
+    {"calculate": "datum.max_lookout > 0 ? (datum.num_lookouts / datum.max_lookout) * 100 : 0", "as": "Lookouts"},
+    {"fold": ["Campsites", "Toilets", "Lookouts"], "as": ["Metric", "Score"]},
+    {"calculate": "datum.Metric === 'Campsites' ? datum.num_campsites : (datum.Metric === 'Toilets' ? datum.num_toilets : datum.num_lookouts)", "as": "raw_count"}
   ],
+  "encoding": {
+    "x": {
+      "field": "Metric",
+      "type": "nominal",
+      "sort": ["Campsites", "Toilets", "Lookouts"],
+      "title": null,
+      "scale": {"range": [20, 360]},
+      "axis": {"labelAngle": 0, "labelFontSize": 13, "labelFontWeight": 600, "grid": true, "domain": false, "ticks": false}
+    },
+    "y": {
+      "field": "Score",
+      "type": "quantitative",
+      "title": "Relative to the highest of these five parks (%)",
+      "scale": {"domain": [0, 100]}
+    },
+    "color": {"field": "state", "type": "nominal", "title": "State"}
+  },
   "layer": [
     {
-      "mark": {
-        "type": "line",
-        "strokeWidth": 3,
-        "clip": true
-      },
+      "mark": {"type": "line", "strokeJoin": "round"},
       "encoding": {
-        "x": {
-          "field": "Metric",
-          "type": "nominal",
-          "title": "Facility Category",
-          "scale": {"padding": 0.2},
-          "axis": {"labelAngle": 0}
-        },
-        "y": {
-          "field": "NormalisedScored",
-          "type": "quantitative",
-          "title": "Normalized Relative Score (%)",
-          "scale": {"domain": [0, 100], "clamp": true}
-        },
         "detail": {"field": "name", "type": "nominal"},
-        "color": {
-          "condition": {
-            "test": "selected_park === null || datum.name === selected_park",
-            "field": "name",
-            "type": "nominal",
-            "title": "Park"
-          },
-          "value": "#cfd8dc"
-        },
         "opacity": {
-          "condition": {
-            "test": "selected_park === null || datum.name === selected_park",
-            "value": 1
-          },
+          "condition": {"test": "selected_park === null || datum.name === selected_park", "value": 1},
           "value": 0.15
         },
         "strokeWidth": {
-          "condition": {
-            "test": "selected_park !== null && datum.name === selected_park",
-            "value": 4.5
-          },
-          "value": 2
+          "condition": {"test": "selected_park !== null && datum.name === selected_park", "value": 5},
+          "value": 3
+        }
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 70},
+      "encoding": {
+        "opacity": {
+          "condition": {"test": "selected_park === null || datum.name === selected_park", "value": 1},
+          "value": 0.15
         },
         "tooltip": [
           {"field": "name", "type": "nominal", "title": "Park"},
           {"field": "state", "type": "nominal", "title": "State"},
-          {"field": "Metric", "type": "nominal", "title": "Category"},
-          {
-            "field": "NormalisedScored",
-            "type": "quantitative",
-            "title": "Relative Score (%)",
-            "format": ".1f"
-          }
+          {"field": "Metric", "type": "nominal", "title": "Feature"},
+          {"field": "raw_count", "type": "quantitative", "title": "Mapped count"}
         ]
       }
     },
     {
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 50,
-        "clip": true
-      },
+      "transform": [{"filter": "datum.Metric === 'Lookouts'"}],
+      "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12, "fontWeight": 600},
       "encoding": {
-        "x": {"field": "Metric", "type": "nominal"},
-        "y": {
-          "field": "NormalisedScored",
-          "type": "quantitative",
-          "scale": {"domain": [0, 100], "clamp": true}
-        },
-        "detail": {"field": "name", "type": "nominal"},
-        "color": {
-          "condition": {
-            "test": "selected_park === null || datum.name === selected_park",
-            "field": "name",
-            "type": "nominal"
-          },
-          "value": "#b0bec5"
-        },
+        "text": {"field": "short_name", "type": "nominal"},
         "opacity": {
-          "condition": {
-            "test": "selected_park === null || datum.name === selected_park",
-            "value": 1
-          },
-          "value": 0.2
+          "condition": {"test": "selected_park === null || datum.name === selected_park", "value": 1},
+          "value": 0.25
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -13, "fontSize": 12, "fontWeight": 700},
+      "encoding": {
+        "text": {"field": "raw_count", "type": "quantitative", "format": ","},
+        "color": {"value": "#263238"},
+        "opacity": {
+          "condition": {"test": "selected_park !== null && datum.name === selected_park", "value": 1},
+          "value": 0
         }
       }
     }

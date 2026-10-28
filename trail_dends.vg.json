@@ -1,43 +1,19 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
-    "url": "https://raw.githubusercontent.com/taRretaw/data-vis-2-x-clon/refs/heads/main/data/all_park_stats.csv",
-    "format": {
-      "type": "csv",
-      "parse": {
-      "trail_density": "number"
-      }
-    }
+    "url": "data/all_parks_stats.csv",
+    "format": {"type": "csv", "parse": {"trail_density": "number"}}
   },
+  "width": 200,
+  "height": 200,
   "transform": [
-    {
-      "filter": "isValid(datum.trail_density)"
-    },
-    {
-      "window": [{"op": "rank", "as": "rank"}],
-      "sort": [{"field": "trail_density", "order": "descending"}]
-    },
-    {
-      "filter": "datum.rank <= 10"
-    }
+    {"filter": "isValid(datum.trail_density)"},
+    {"filter": "indexof(['franklin-gordon wild rivers national park','grampians (gariwerd) national park','alpine national park','kosciuszko national park','blue mountains national park'], lower(datum.name)) >= 0"}
   ],
   "mark": {"type": "bar", "cornerRadiusEnd": 4},
   "encoding": {
-    "y": {
-      "field": "name",
-      "type": "nominal",
-      "sort": "-x",
-      "title": null
-    },
-    "x": {
-      "field": "trail_density",
-      "type": "quantitative",
-      "title": "Trail Density (m / km²)"
-    },
-    "color": {
-      "field": "state",
-      "type": "nominal",
-      "title": "State"
-    }
+    "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
+    "x": {"field": "trail_density", "type": "quantitative", "title": "Trail density (m of track per km²)"},
+    "color": {"field": "state", "type": "nominal", "title": "State"}
   }
 }

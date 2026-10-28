@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 800,
+  "projection": {
+    "type": "mercator",
+    "rotate": [-142.4325, 0, 0],
+    "center": [0, -37.2534],
+    "scale": 30000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_elev_polygons"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#1b5e20", "strokeWidth": 0.5},
+      "encoding": {
+        "color": {
+          "field": "properties.ELEV_MAX",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [200, 400, 600, 800, 1000],
+            "range": ["#0d0887", "#3b02a8", "#6a00a8", "#8a088e", "#a01060"]
+          },
+          "legend": {"title": "Max Elevation (m)"}
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/grampians.json",
+        "format": {"type": "topojson", "feature": "grampians_GPT"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#c80000", "strokeWidth": 6, "fill": "transparent"},
+      "encoding": {}
+    }
+  ]
+}

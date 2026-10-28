@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 700,
+  "background": "transparent",
+  "config": {"view": {"stroke": null}},
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "elev_polygons"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.2},
+      "encoding": {
+        "color": {
+          "field": "properties.ELEV_MAX",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [200, 400, 600, 800, 1000, 1200, 1500, 1800, 2000],
+            "range": ["#b7cf9f", "#d3dfa2", "#ebe3a6", "#e6cf94", "#d4b07a",
+                      "#b88a63", "#9a7058", "#8a7f7a", "#bdb8b3", "#f1efec"]
+          },
+          "legend": {"title": "Elevation (m)", "orient": "bottom-left"}
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "rivers"}
+      },
+      "mark": {"type": "geoshape", "filled": false, "stroke": "#5fa8d3", "strokeWidth": 0.8, "strokeCap": "round", "strokeJoin": "round", "opacity": 0.8}
+    },
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "fwd"}
+      },
+      "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1, "strokeDash": [4, 3], "opacity": 0.7}
+    },
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "tracks"}
+      },
+      "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1.4, "opacity": 0.7}
+    },
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "waterfalls"}
+      },
+      "mark": {"type": "point", "shape": "circle", "filled": true, "color": "#ffffff", "opacity": 1, "size": 90},
+      "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"}
+      }
+    },
+    {
+      "data": {
+        "url": "data/blue_mountains.json",
+        "format": {"type": "topojson", "feature": "waterfalls"}
+      },
+      "mark": {"type": "point", "shape": "circle", "filled": true, "color": "#0d47a1", "opacity": 0.35, "size": 90},
+      "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"}
+      }
+    }
+  ]
+}

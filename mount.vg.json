@@ -1,0 +1,122 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1200,
+  "height": 1120,
+  "background": "transparent",
+  "config": {"view": {"stroke": null}},
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "elev"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.01},
+      "encoding": {
+        "color": {
+          "field": "properties.ELEV_MAX",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [200, 400, 600, 800, 1000, 1200, 1500, 1800, 2000],
+            "range": ["#b7cf9f", "#d3dfa2", "#ebe3a6", "#e6cf94", "#d4b07a",
+                      "#b88a63", "#9a7058", "#8a7f7a", "#bdb8b3", "#f1efec"]
+          },
+          "legend": {
+            "title": "Elevation (m)",
+            "orient": "bottom-right",
+            "direction": "vertical",
+            "symbolType": "square",
+            "fillColor": "rgba(255,255,255,0.85)",
+            "padding": 8
+            }
+        }
+      }
+    },
+    {
+    "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "fwd"}
+    },
+    "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1, "strokeDash": [4, 3], "opacity": 0.7}
+    },
+    {
+    "data": {
+        "url": "data/alpine.json",
+        "format": {"type": "topojson", "feature": "trails"}
+    },
+    "mark": {"type": "geoshape", "filled": false, "stroke": "#c62828", "strokeWidth": 1.4, "opacity": 0.7}
+    },
+    {
+  "data": {
+    "url": "data/alpine.json",
+    "format": {"type": "topojson", "feature": "peaks"}
+  },
+  "transform": [
+    {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+    {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"}
+  ],
+  "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#455a64", "stroke": "#ffffff", "strokeWidth": 0.5},
+  "encoding": {
+    "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+    "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+    "size": {
+      "field": "elev",
+      "type": "quantitative",
+      "scale": {"domain": [1000, 2250], "range": [25, 160]},
+      "legend": {
+        "title": "Peak height (m)",
+        "orient": "bottom-right",
+        "direction": "vertical",
+        "fillColor": "rgba(255,255,255,0.85)",
+        "padding": 8
+        }
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "Peak"},
+      {"field": "elev", "type": "quantitative", "title": "Elevation (m)"}
+    ]
+  }
+},
+{
+  "data": {
+    "url": "data/alpine.json",
+    "format": {"type": "topojson", "feature": "peaks"}
+  },
+  "transform": [
+    {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+    {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
+    {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"}
+  ],
+  "mark": {"type": "point", "shape": "triangle-up", "filled": true, "color": "#000000", "stroke": "#ffffff", "strokeWidth": 1},
+  "encoding": {
+    "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+    "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+    "size": {
+      "field": "elev",
+      "type": "quantitative",
+      "scale": {"domain": [1000, 2250], "range": [25, 160]},
+      "legend": null
+    }
+  }
+},
+{
+  "data": {
+    "url": "data/alpine.json",
+    "format": {"type": "topojson", "feature": "peaks"}
+  },
+  "transform": [
+    {"filter": "isValid(datum.properties.name) && datum.properties.name != ''"},
+    {"calculate": "toNumber(datum.properties.elevation_m)", "as": "elev"},
+    {"filter": "indexof(['mount kościuszko','mount bogong','mount feathertop','mount howitt','mount jagungal','mount reynard','mount cobberas number 1','mount tingaringy','tantangra mountain','mount morgan','mount cope','mount blue rag'], lower(datum.properties.name)) >= 0"},
+    {"calculate": "datum.properties.name + ' (' + format(datum.elev, ',.0f') + ' m)'", "as": "peak_label"}
+  ],
+  "mark": {"type": "text", "align": "left", "dx": 9, "dy": -3, "fontSize": 17, "fontWeight": 800, "color": "#000000", "stroke": "#ffffff", "strokeWidth": 1, "strokeJoin": "round"},
+  "encoding": {
+    "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+    "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+    "text": {"field": "peak_label", "type": "nominal"}
+  }
+}
+  ]
+}

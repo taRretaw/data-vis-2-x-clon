@@ -36,13 +36,21 @@
       "field": "walking_km",
       "type": "quantitative",
       "title": "Walking Track Length (km - Log Scale)",
-      "scale": {"type": "log"}
+      "scale": {"type": "log"},
+      "axis": {
+        "format": ",",
+        "values": [0.1, 1, 10, 100, 1000, 10000]
+      }
     },
     "y": {
       "field": "4wd_km",
       "type": "quantitative",
       "title": "4WD Track Length (km - Log Scale)",
-      "scale": {"type": "log"}
+      "scale": {"type": "log"},
+      "axis": {
+        "format": ",",
+        "values": [0.1, 1, 10, 100, 1000, 10000]
+      }
     },
     "color": {
       "field": "state",
