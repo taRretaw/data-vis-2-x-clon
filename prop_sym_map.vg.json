@@ -75,7 +75,7 @@
           "field": "properties.campsites_counts",
           "type": "quantitative",
           "title": "Campsites",
-          "scale": {"range": [0, 450]},
+          "scale": {"range": [0, 1000]},
 
         "legend": {
             "title": "Campsites",

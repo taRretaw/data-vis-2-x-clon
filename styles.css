@@ -174,9 +174,9 @@ h1 {
 }
 
 /* stats over the maps' empty corners */
-.overlay-stats { position: absolute; left: 12px; top: 160px; width: 44%; pointer-events: none; }
+.overlay-stats { position: absolute; left: 12px; top: 140px; width: 44%; pointer-events: none; }
 .overlay-stats .big-stat { margin-bottom: 18px; }
-.overlay-stats-right { top: 60px; left: auto; right: -40px; width: 33%; }
+.overlay-stats-right { top: 20px; left: auto; right: -40px; width: 33%; }
 
 /* ---------- accessibility chart: dropdown sits underneath ---------- */
 #vis_accessibility {

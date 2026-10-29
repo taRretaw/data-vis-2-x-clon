@@ -3,7 +3,7 @@
   "width": 600,
   "height": 350,
   "data": {
-    "url": "data/all_parks_stats.csv",
+    "url":"data/all_parks_stats.csv",
     "format": {"type": "csv", "parse": {"elevation_m_max": "number"}}
   },
   "transform": [
